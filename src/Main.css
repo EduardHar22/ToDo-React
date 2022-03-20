@@ -1,0 +1,26 @@
+.main_content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.todos_div {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(221, 219, 219);
+    border: silver solid 1px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 3% 0 3%;
+    align-items: center;
+}
+.todos_div > h1 {
+    color: whitesmoke;
+}
+.todos_div > button {
+    width: 5%;
+    height: 50%;
+    border: solid 2px silver;
+    color: silver;
+}
