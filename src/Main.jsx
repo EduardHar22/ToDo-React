@@ -1,22 +1,20 @@
 import "./Main.css"
-export default function Main({item, todo, setTodo}){
-
-    function filtered(){
-        let filteredTodo = todo.filter((elem) => item.id !== elem.id) 
-        return filteredTodo
-    }
+export default function Main({ item, todo, dispatch }){
 
     return (  
         <div className='todos_div'>
             <input type="checkbox" onChange={() => {
-                item.isCompleted = !item.isCompleted
-                setTodo([
-                ...todo
-                ])
+                dispatch({
+                    type: "checkbox_change",
+                    payload: item
+                })
                 }}/>
             <h1>{item.text}</h1>
             <button onClick={() => {
-              setTodo(filtered)
+              dispatch({
+                    type: "delete",
+                    payload: item.id
+              })
             }}>X</button>
         </div>
     )

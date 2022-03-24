@@ -2,11 +2,44 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import './App.css';
-import { useState } from 'react';
+import { useReducer } from 'react';
+
+function reducer(state, action){
+  switch(action.type){
+    case "add":{
+      return [
+        ...state,
+        {
+          id: Math.random(),
+          text: action.payload,
+          isCompleted: false
+        }
+      ]
+    }
+    case "checkbox_change":{
+      return state.map((item) => {
+        if(item.id === action.payload.id){
+          return {
+            ...item, 
+            isCompleted: !item.isCompleted
+          }
+        }
+        return item
+      })
+    }
+    case "delete":{
+      return state.filter((elem) => action.payload !== elem.id)
+    }
+    case "clear":{
+      return state.filter((item) => !item.isCompleted)
+    }
+  }
+}
 
 function App() {
-  const [todo, setTodo] = useState([
-
+  
+  const [todo, dispatch] = useReducer(reducer,[
+   
     {
       id: Math.random(),
       text: "React",
@@ -26,16 +59,16 @@ function App() {
     },
 
   ])
-
+  console.log(todo)
   return (
     <div className="App">
       <h1>ToDo List</h1>
       <div className="container">
-        <Header setTodo={setTodo} />
+        <Header dispatch={dispatch} />
         <div className='main_content'>
-          {todo.map((item) => <Main key={item.id} todo={todo} setTodo={setTodo} item={item} />)}
+          {todo.map((item) => <Main key={item.id} todo={todo} dispatch={dispatch} item={item} />)}
         </div>
-        <Footer todo={todo} setTodo={setTodo}/>
+          <Footer todo={todo} dispatch={dispatch}/>
       </div>
     </div>
   );
